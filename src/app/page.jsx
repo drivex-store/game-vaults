@@ -1,0 +1,21 @@
+import LandingClient from '@/features/landing/LandingClient';
+import {
+  getPublishedAnimations,
+  getShippedRecently,
+} from '@/libs/supabase/latestAnimation';
+
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const [animations, shippedRecently] = await Promise.all([
+    getPublishedAnimations(),
+    getShippedRecently(),
+  ]);
+
+  return (
+    <LandingClient
+      animations={animations}
+      shippedRecently={shippedRecently}
+    />
+  );
+}
